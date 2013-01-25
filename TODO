@@ -1,0 +1,15 @@
+// TODO LIST
+// Mettre en desous de chaque tâche la liste
+// des personnes s'en occuppant
+
+(1) Mise en place (layout)
+ 
+Classe carte (view) :
+(1)  Affichage de la carte
+(1)  Tableau d'objets
+(2)  Ajout/Suppression tours
+(2)  Event du clic
+(1)  Redimension auto
+(1)  Carte initiale
+ 
+(1) Importation des images
