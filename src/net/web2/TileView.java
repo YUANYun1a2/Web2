@@ -101,8 +101,9 @@ public class TileView extends View {
         mXTileCount = (int) Math.floor(w / mTileSize);
         mYTileCount = (int) Math.floor(h / mTileSize);
 
-        mXOffset = ((w - (mTileSize * mXTileCount)) / 2);
-        mYOffset = ((h - (mTileSize * mYTileCount)) / 2);
+        
+        /*mXOffset = ((w - (mTileSize * mXTileCount)) / 2);
+        mYOffset = ((h - (mTileSize * mYTileCount)) / 2);*/
 
         mTileGrid = new int[mXTileCount][mYTileCount];
         clearTiles();
@@ -153,12 +154,12 @@ public class TileView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int x = 0; x < mXTileCount; x += 1) {
-            for (int y = 0; y < mYTileCount; y += 1) {
-                if (mTileGrid[x][y] > 0) {
-                    canvas.drawBitmap(mTileArray[mTileGrid[x][y]], 
-                    		mXOffset + x * mTileSize,
-                    		mYOffset + y * mTileSize,
+        for (int i = 0; i < mXTileCount; i += 1) {
+            for (int j = 0; j < mYTileCount; j += 1) {
+                if (mTileGrid[i][j] > 0) {
+                    canvas.drawBitmap(mTileArray[mTileGrid[i][j]], 
+                    		/*mXOffset + */ i * mTileSize,
+                    		/*mYOffset + */ j * mTileSize,
                     		mPaint);
                 }
             }
