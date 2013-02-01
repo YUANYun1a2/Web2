@@ -49,9 +49,9 @@ public class TileView extends View {
     
 
 
-    private static final int VIDE = 1;
-    private static final int ROUTE = 2;
-    private static final int TOUR = 3;
+    private static final int VIDE = 0;
+    private static final int ROUTE = 1;
+    private static final int TOUR = 2;
     /**
      * A hash that maps integer handles specified by the subclasser to the
      * drawable that will be used for that reference
@@ -93,6 +93,20 @@ public class TileView extends View {
         super(context, attrs, defStyle);
         
         init();
+        int[][] mTileGrid = new int[][]{
+        		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,0,2,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,1,0,0,0,0,1,1,1,1,0,0,0,0,0},
+        		{0,1,0,0,0,0,1,0,0,1,2,0,0,0,0},
+        		{0,1,2,0,0,2,1,0,0,1,1,1,1,0,0},
+        		{0,1,1,1,1,1,1,0,0,0,0,2,1,0,0},
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        		};
+        
+        };
         
 /*        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
 
