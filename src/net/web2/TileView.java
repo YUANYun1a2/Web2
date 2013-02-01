@@ -100,8 +100,20 @@ public class TileView extends View {
     void init(){
         mXTileCount=15;
         mYTileCount=10;
-        mTileGrid = new int [15][10];
+
         initTileView();
+        mTileGrid = new int[][]{
+        		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,0,2,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,1,0,0,0,0,1,1,1,1,0,0,0,0,0},
+        		{0,1,0,0,0,0,1,0,0,1,2,0,0,0,0},
+        		{0,1,2,0,0,2,1,0,0,1,1,1,1,0,0},
+        		{0,1,1,1,1,1,1,0,0,0,0,2,1,0,0},
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        		};
     }
 
     public void ajout(int x, int y){
@@ -119,19 +131,7 @@ public class TileView extends View {
     public TileView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         
-        init();
-        int[][] mTileGrid = new int[][]{
-        		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-        		{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
-        		{0,0,2,1,0,0,0,0,0,0,0,0,0,0,0},
-        		{0,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-        		{0,1,0,0,0,0,1,1,1,1,0,0,0,0,0},
-        		{0,1,0,0,0,0,1,0,0,1,2,0,0,0,0},
-        		{0,1,2,0,0,2,1,0,0,1,1,1,1,0,0},
-        		{0,1,1,1,1,1,1,0,0,0,0,2,1,0,0},
-        		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
-        		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
-        		};
+        
         
         };
         
@@ -158,7 +158,6 @@ public class TileView extends View {
     public TileView(Context context) {
         super(context);
         
-        init();
         
 /*
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
