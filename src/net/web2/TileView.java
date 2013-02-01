@@ -192,6 +192,14 @@ public class TileView extends View {
     public int getJ(float y){
     	return (int) FloatMath.floor(y - mYOffset / mTileSize);
     }
+    
+    public float getX(int i){
+    	return (float) i; //Je sais pas faire la suite :D
+    }
+    
+    public float getY(int j){
+    	return (float) j; //Je sais pas faire la suite :D
+    }
      
     /** @author remi.rischebe **/
     // Evenement du clic souris pour ajout des tours
