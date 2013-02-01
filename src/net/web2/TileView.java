@@ -17,12 +17,12 @@
 package net.web2;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -185,12 +185,12 @@ public class TileView extends View {
         }
     }
     
-    public int conversionX(float pixelX){
-    	return (int) Math.floor(pixelX / mTileSize);
+    public int getI(float x){
+    	return (int) FloatMath.floor(x / mTileSize);
     }
     
-    public int conversionY(float pixelY){
-    	return (int) Math.floor(pixelY / mTileSize);
+    public int getJ(float y){
+    	return (int) FloatMath.floor(y / mTileSize);
     }
      
     /** @author remi.rischebe **/
@@ -199,10 +199,10 @@ public class TileView extends View {
 	public boolean onTouchEvent(MotionEvent event) {
 		if(event.getAction() == MotionEvent.ACTION_UP){
 	    	// Conversion des event.x et event.y
-	    	int i = conversionX(event.getX());
-	    	int j = conversionY(event.getY());
-			if(mTileGrid[i][j] == 0)	; // méthode ajout d'une tour
-			else if(mTileGrid[i][j] == 2)	; // méthode suppresion d'une tour
+	    	int i = getI(event.getX());
+	    	int j = getJ(event.getY());
+			if(mTileGrid[i][j] == VIDE)		ajout(i, j); // méthode ajout d'une tour
+			else if(mTileGrid[i][j] == TOUR)	suppression(i, j); // méthode suppresion d'une tour
 		}
 		return true;
 	}
