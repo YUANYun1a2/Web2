@@ -49,15 +49,26 @@ public class TileView extends View {
     private static int mXOffset;
     private static int mYOffset;
 
+
     private Matrix transform;
 	private Matrix intransform;
 
+
+    private static final int VIDE = 1;
+    private static final int ROUTE = 2;
+    private static final int TOUR = 3;
+    
     /**
      * A hash that maps integer handles specified by the subclasser to the
      * drawable that will be used for that reference
      */
     private Bitmap[] mTileArray; 
 
+    
+    
+    
+    
+    
     /**
      * A two-dimensional array of integers in which the number represents the
      * index of the tile that should be drawn at that locations
@@ -66,6 +77,18 @@ public class TileView extends View {
 
     private final Paint mPaint = new Paint();
 
+    public void ajout(int x, int y){
+    	if (mTileGrid[x][y]==VIDE){
+    	mTileGrid[x][y] = TOUR;
+    	}
+    }
+    
+    public void suppression(int x, int y){
+    	if (mTileGrid[x][y] == TOUR){
+    		mTileGrid[x][y] = VIDE;
+    	}
+    }
+    
     public TileView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
@@ -157,12 +180,12 @@ public class TileView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int x = 0; x < mXTileCount; x += 1) {
-            for (int y = 0; y < mYTileCount; y += 1) {
-                if (mTileGrid[x][y] > 0) {
-                    canvas.drawBitmap(mTileArray[mTileGrid[x][y]], 
-                    		mXOffset + x * mTileSize,
-                    		mYOffset + y * mTileSize,
+        for (int i = 0; i < mXTileCount; i += 1) {
+            for (int j = 0; j < mYTileCount; j += 1) {
+                if (mTileGrid[i][j] > 0) {
+                    canvas.drawBitmap(mTileArray[mTileGrid[i][j]], 
+                    		mXOffset +  i * mTileSize,
+                    		mYOffset +  j * mTileSize,
                     		mPaint);
                 }
             }
