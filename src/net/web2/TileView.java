@@ -17,10 +17,13 @@
 package net.web2;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -40,6 +43,7 @@ public class TileView extends View {
      */
 
     protected static int mTileSize;
+    int w; int h;
 
     protected static int mXTileCount;
     protected static int mYTileCount;
@@ -48,16 +52,24 @@ public class TileView extends View {
     private static int mYOffset;
     
 
-
     private static final int VIDE = 0;
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
+
+
+    private Matrix transform;
+	private Matrix intransform;
+
+
+
+    
+
     /**
      * A hash that maps integer handles specified by the subclasser to the
      * drawable that will be used for that reference
      */
     private Bitmap[] mTileArray; 
-
+   
     
     
     
@@ -68,6 +80,20 @@ public class TileView extends View {
      * index of the tile that should be drawn at that locations
      */
     private int[][] mTileGrid;
+    
+    private void initTileView() {
+        setFocusable(true);
+
+        Resources r = this.getContext().getResources();
+        
+        resetTiles(3);
+        loadTile(VIDE, r.getDrawable(R.drawable.ic_launcher));
+        loadTile(TOUR, r.getDrawable(R.drawable.tour));
+        loadTile(ROUTE, r.getDrawable(R.drawable.ennemi));
+    	
+    }
+    
+
 
     private final Paint mPaint = new Paint();
     
@@ -113,7 +139,7 @@ public class TileView extends View {
         mTileSize = a.getInt(R.styleable.TileView_tileSize, 12);
         
         a.recycle();*/
-    }
+    
 
     public TileView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -141,7 +167,7 @@ public class TileView extends View {
     	mTileArray = new Bitmap[tilecount];
     }
 
-
+/*
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         mXTileCount = (int) Math.floor(w / mTileSize);
@@ -153,7 +179,7 @@ public class TileView extends View {
         mTileGrid = new int[mXTileCount][mYTileCount];
         clearTiles();
     }
-
+*/
     /**
      * Function to set the specified Drawable as the tile for a particular
      * integer key.
@@ -199,17 +225,36 @@ public class TileView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int x = 0; x < mXTileCount; x += 1) {
-            for (int y = 0; y < mYTileCount; y += 1) {
-                if (mTileGrid[x][y] > 0) {
-                    canvas.drawBitmap(mTileArray[mTileGrid[x][y]], 
-                    		mXOffset + x * mTileSize,
-                    		mYOffset + y * mTileSize,
+        for (int i = 0; i < mXTileCount; i += 1) {
+            for (int j = 0; j < mYTileCount; j += 1) {
+                if (mTileGrid[i][j] > 0) {
+                    canvas.drawBitmap(mTileArray[mTileGrid[i][j]], 
+                    		mXOffset +  i * mTileSize,
+                    		mYOffset +  j * mTileSize,
                     		mPaint);
                 }
             }
         }
 
     }
+    
+    
+    //Gestion taille ecran 
+    @Override
+    protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
+    	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
 
+
+        mXOffset = ((largeur - (mTileSize * mXTileCount)) / 2);
+        mYOffset = ((hauteur - (mTileSize * mYTileCount)) / 2);
+
+        
+		transform = new Matrix();
+		intransform = new Matrix();
+		RectF rectVoulu = new RectF(0, 0, largeur, hauteur);
+		RectF rectReel = new RectF(0, 0, ancien_largeur, ancien_hauteur);
+		transform.setRectToRect(rectVoulu, rectReel, Matrix.ScaleToFit.CENTER);	
+		transform.invert(intransform);
+	}
+    
 }
