@@ -17,10 +17,11 @@
 package net.web2;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -40,6 +41,7 @@ public class TileView extends View {
      */
 
     protected static int mTileSize;
+    int w; int h;
 
     protected static int mXTileCount;
     protected static int mYTileCount;
@@ -47,6 +49,8 @@ public class TileView extends View {
     private static int mXOffset;
     private static int mYOffset;
 
+    private Matrix transform;
+	private Matrix intransform;
 
     /**
      * A hash that maps integer handles specified by the subclasser to the
@@ -95,7 +99,7 @@ public class TileView extends View {
     	mTileArray = new Bitmap[tilecount];
     }
 
-
+/*
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         mXTileCount = (int) Math.floor(w / mTileSize);
@@ -107,7 +111,7 @@ public class TileView extends View {
         mTileGrid = new int[mXTileCount][mYTileCount];
         clearTiles();
     }
-
+*/
     /**
      * Function to set the specified Drawable as the tile for a particular
      * integer key.
@@ -165,5 +169,28 @@ public class TileView extends View {
         }
 
     }
+    
+    
+    //Gestion taille ecran 
+    @Override
+	protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
+    	mXTileCount = (int) Math.floor(largeur / mTileSize);
+        mYTileCount = (int) Math.floor(hauteur / mTileSize);
 
+        mXOffset = ((largeur - (mTileSize * mXTileCount)) / 2);
+        mYOffset = ((hauteur - (mTileSize * mYTileCount)) / 2);
+
+        mTileGrid = new int[mXTileCount][mYTileCount];
+        clearTiles();
+        
+        
+		super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
+		transform = new Matrix();
+		intransform = new Matrix();
+		RectF rectVoulu = new RectF(0, 0, largeur, hauteur);
+		RectF rectReel = new RectF(0, 0, ancien_largeur, ancien_hauteur);
+		transform.setRectToRect(rectVoulu, rectReel, Matrix.ScaleToFit.CENTER);	
+		transform.invert(intransform);
+	}
+    
 }
