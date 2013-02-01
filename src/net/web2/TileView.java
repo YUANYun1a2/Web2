@@ -211,19 +211,19 @@ public class TileView extends View {
     }
     
     public int getI(float x){
-    	return (int) FloatMath.floor(x - mXOffset / mTileSize);
+    	return (int) FloatMath.floor(x / mTileSize - mXOffset);
     }
     
     public int getJ(float y){
-    	return (int) FloatMath.floor(y - mYOffset / mTileSize);
+    	return (int) FloatMath.floor(y / mTileSize - mYOffset);
     }
     
     public float getX(int i){
-    	return (float) i; //Je sais pas faire la suite :D
+    	return (float) (mXOffset +  i * mTileSize);
     }
     
     public float getY(int j){
-    	return (float) j; //Je sais pas faire la suite :D
+    	return (float) (mYOffset +  j * mTileSize);
     }
      
     /** @author remi.rischebe **/
