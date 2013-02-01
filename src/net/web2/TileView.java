@@ -18,12 +18,10 @@ package net.web2;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.FloatMath;
@@ -44,7 +42,7 @@ public class TileView extends View {
      * dimensions. X/Y Tile Counts are the number of tiles that will be drawn.
      */
 
-    protected static int mTileSize;
+    protected static int mTileSize = 50;
     int w; int h;
 
     protected static int mXTileCount;
@@ -89,9 +87,9 @@ public class TileView extends View {
         Resources r = this.getContext().getResources();
         
         resetTiles(3);
-        loadTile(VIDE, r.getDrawable(R.drawable.ic_launcher));
+        loadTile(VIDE, r.getDrawable(R.drawable.herbe));
         loadTile(TOUR, r.getDrawable(R.drawable.tour));
-        loadTile(ROUTE, r.getDrawable(R.drawable.ennemi));
+        loadTile(ROUTE, r.getDrawable(R.drawable.chemin));
     	
     }
     
@@ -103,6 +101,7 @@ public class TileView extends View {
         mXTileCount=15;
         mYTileCount=10;
         mTileGrid = new int [15][10];
+        initTileView();
     }
 
     public void ajout(int x, int y){
@@ -145,6 +144,19 @@ public class TileView extends View {
 
     public TileView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        
+        init();
+        
+/*
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
+
+        mTileSize = a.getInt(R.styleable.TileView_tileSize, 12);
+        
+        a.recycle();*/
+    }
+
+    public TileView(Context context) {
+        super(context);
         
         init();
         
@@ -273,7 +285,7 @@ public class TileView extends View {
     @Override
     protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
     	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
-
+/*
 
         mXOffset = ((largeur - (mTileSize * mXTileCount)) / 2);
         mYOffset = ((hauteur - (mTileSize * mYTileCount)) / 2);
@@ -284,7 +296,7 @@ public class TileView extends View {
 		RectF rectVoulu = new RectF(0, 0, largeur, hauteur);
 		RectF rectReel = new RectF(0, 0, ancien_largeur, ancien_hauteur);
 		transform.setRectToRect(rectVoulu, rectReel, Matrix.ScaleToFit.CENTER);	
-		transform.invert(intransform);
+		transform.invert(intransform);*/
 	}
     
 }
