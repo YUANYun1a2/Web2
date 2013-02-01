@@ -77,6 +77,18 @@ public class TileView extends View {
         mTileGrid = new int [50][50];
     }
 
+    public void ajout(int x, int y){
+    	if (mTileGrid[x][y]==VIDE){
+    	mTileGrid[x][y] = TOUR;
+    	}
+    }
+    
+    public void suppression(int x, int y){
+    	if (mTileGrid[x][y] == TOUR){
+    		mTileGrid[x][y] = VIDE;
+    	}
+    }
+    
     public TileView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         
