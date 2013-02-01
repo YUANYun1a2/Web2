@@ -47,13 +47,20 @@ public class TileView extends View {
     private static int mXOffset;
     private static int mYOffset;
 
-
+    private static final int VIDE = 1;
+    private static final int ROUTE = 2;
+    private static final int TOUR = 3;
     /**
      * A hash that maps integer handles specified by the subclasser to the
      * drawable that will be used for that reference
      */
     private Bitmap[] mTileArray; 
 
+    
+    
+    
+    
+    
     /**
      * A two-dimensional array of integers in which the number represents the
      * index of the tile that should be drawn at that locations
@@ -62,6 +69,18 @@ public class TileView extends View {
 
     private final Paint mPaint = new Paint();
 
+    public void ajout(int x, int y){
+    	if (mTileGrid[x][y]==VIDE){
+    	mTileGrid[x][y] = TOUR;
+    	}
+    }
+    
+    public void suppression(int x, int y){
+    	if (mTileGrid[x][y] == TOUR){
+    		mTileGrid[x][y] = VIDE;
+    	}
+    }
+    
     public TileView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
