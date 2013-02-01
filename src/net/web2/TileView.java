@@ -18,7 +18,6 @@ package net.web2;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -27,6 +26,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+
 
 
 /**
@@ -43,8 +43,10 @@ public class TileView extends View {
      */
 
     protected static int mTileSize;
-    int w; int h;
 
+	private static final int TARGET_HEIGHT = 800;
+	private static final int TARGET_WIDTH = 600;
+	private Paint paint;
     protected static int mXTileCount;
     protected static int mYTileCount;
 
@@ -206,9 +208,12 @@ public class TileView extends View {
                 }
             }
         }
+		canvas.drawRect(0, 0, TARGET_WIDTH-1, TARGET_HEIGHT-1, paint);
 
     }
     
+    
+
     
     //Gestion taille ecran 
     @Override
