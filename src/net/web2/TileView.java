@@ -23,6 +23,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 
@@ -170,7 +171,27 @@ public class TileView extends View {
                 }
             }
         }
-
     }
-
+    
+    public int conversionX(float pixelX){
+    	return (int) Math.floor(pixelX / mTileSize);
+    }
+    
+    public int conversionY(float pixelY){
+    	return (int) Math.floor(pixelY / mTileSize);
+    }
+     
+    /** @author remi.rischebe **/
+    // Evenement du clic souris pour ajout des tours
+    @Override
+	public boolean onTouchEvent(MotionEvent event) {
+		if(event.getAction() == MotionEvent.ACTION_UP){
+	    	// Conversion des event.x et event.y
+	    	int i = conversionX(event.getX());
+	    	int j = conversionY(event.getY());
+			if(mTileGrid[i][j] == 0)	; // méthode ajout d'une tour
+			else if(mTileGrid[i][j] == 2)	; // méthode suppresion d'une tour
+		}
+		return true;
+	}
 }
