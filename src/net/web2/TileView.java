@@ -196,18 +196,14 @@ public class TileView extends View {
     
     //Gestion taille ecran 
     @Override
-	protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
-    	mXTileCount = (int) Math.floor(largeur / mTileSize);
-        mYTileCount = (int) Math.floor(hauteur / mTileSize);
+    protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
+    	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
+
 
         mXOffset = ((largeur - (mTileSize * mXTileCount)) / 2);
         mYOffset = ((hauteur - (mTileSize * mYTileCount)) / 2);
 
-        mTileGrid = new int[mXTileCount][mYTileCount];
-        clearTiles();
         
-        
-		super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
 		transform = new Matrix();
 		intransform = new Matrix();
 		RectF rectVoulu = new RectF(0, 0, largeur, hauteur);
