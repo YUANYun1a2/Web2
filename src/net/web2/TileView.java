@@ -74,7 +74,7 @@ public class TileView extends View {
     void init(){
         mXTileCount=15;
         mYTileCount=10;
-        mTileGrid = new int [50][50];
+        mTileGrid = new int [15][10];
     }
 
     public void ajout(int x, int y){
