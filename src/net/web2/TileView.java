@@ -16,8 +16,6 @@
 
 package net.web2;
 
-import com.example.android.snake.R;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
