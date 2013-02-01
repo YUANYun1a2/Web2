@@ -104,6 +104,7 @@ public class TileView extends View {
         mYTileCount=10;
         mTileGrid = new int [15][10];
         mTileSize = 50;
+        initTileView();
     }
 
     public void ajout(int x, int y){
