@@ -145,7 +145,6 @@ public class TileView extends View {
     public TileView(Context context, AttributeSet attrs) {
         super(context, attrs);
         
-        init();
         
 /*
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
