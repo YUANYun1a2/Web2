@@ -19,7 +19,6 @@ package net.web2;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
@@ -45,7 +44,7 @@ public class TileView extends View {
      * dimensions. X/Y Tile Counts are the number of tiles that will be drawn.
      */
 
-    protected static int mTileSize;
+    protected static int mTileSize = 40;
     int w; int h;
 
     protected static int mXTileCount;
@@ -90,9 +89,9 @@ public class TileView extends View {
         Resources r = this.getContext().getResources();
         
         resetTiles(3);
-        loadTile(VIDE, r.getDrawable(R.drawable.ic_launcher));
+        loadTile(VIDE, r.getDrawable(R.drawable.herbe));
         loadTile(TOUR, r.getDrawable(R.drawable.tour));
-        loadTile(ROUTE, r.getDrawable(R.drawable.ennemi));
+        loadTile(ROUTE, r.getDrawable(R.drawable.chemin));
     	
     }
     
@@ -101,9 +100,22 @@ public class TileView extends View {
     private final Paint mPaint = new Paint();
     
     void init(){
-        mXTileCount=15;
-        mYTileCount=10;
-        mTileGrid = new int [15][10];
+
+        initTileView();
+        mTileGrid = new int[][]{
+        		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,0,2,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,1,0,0,0,0,1,1,1,1,0,0,0,0,0},
+        		{0,1,0,0,0,0,1,0,0,1,2,0,0,0,0},
+        		{0,1,2,0,0,2,1,0,0,1,1,1,1,0,0},
+        		{0,1,1,1,1,1,1,0,0,0,0,2,1,0,0},
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1}
+        		};
+        mXTileCount=mTileGrid.length;
+        mYTileCount=mTileGrid[0].length;
     }
 
     public void ajout(int x, int y){
@@ -120,41 +132,17 @@ public class TileView extends View {
     
     public TileView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        
         init();
-        int[][] mTileGrid = new int[][]{
-        		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-        		{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
-        		{0,0,2,1,0,0,0,0,0,0,0,0,0,0,0},
-        		{0,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-        		{0,1,0,0,0,0,1,1,1,1,0,0,0,0,0},
-        		{0,1,0,0,0,0,1,0,0,1,2,0,0,0,0},
-        		{0,1,2,0,0,2,1,0,0,1,1,1,1,0,0},
-        		{0,1,1,1,1,1,1,0,0,0,0,2,1,0,0},
-        		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
-        		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
-        		};
-        
-        };
-        
-/*        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
-
-        mTileSize = a.getInt(R.styleable.TileView_tileSize, 12);
-        
-        a.recycle();*/
-    
+        };    
 
     public TileView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        
         init();
-        
-/*
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
+    }
 
-        mTileSize = a.getInt(R.styleable.TileView_tileSize, 12);
-        
-        a.recycle();*/
+    public TileView(Context context) {
+        super(context);
+        init();
     }
 
     
@@ -170,19 +158,7 @@ public class TileView extends View {
     	mTileArray = new Bitmap[tilecount];
     }
 
-/*
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        mXTileCount = (int) Math.floor(w / mTileSize);
-        mYTileCount = (int) Math.floor(h / mTileSize);
 
-        mXOffset = ((w - (mTileSize * mXTileCount)) / 2);
-        mYOffset = ((h - (mTileSize * mYTileCount)) / 2);
-
-        mTileGrid = new int[mXTileCount][mYTileCount];
-        clearTiles();
-    }
-*/
     /**
      * Function to set the specified Drawable as the tile for a particular
      * integer key.
@@ -203,13 +179,13 @@ public class TileView extends View {
      * Resets all tiles to 0 (empty)
      * 
      */
-    public void clearTiles() {
+/*    public void clearTiles() {
         for (int x = 0; x < mXTileCount; x++) {
             for (int y = 0; y < mYTileCount; y++) {
                 setTile(0, x, y);
             }
         }
-    }
+    }*/
 
     /**
      * Used to indicate that a particular tile (set with loadTile and referenced
@@ -241,11 +217,11 @@ public class TileView extends View {
     }
     
     public int getI(float x){
-    	return (int) FloatMath.floor(x / mTileSize - mXOffset);
+    	return (int) FloatMath.floor((x - mXOffset) / mTileSize);
     }
     
     public int getJ(float y){
-    	return (int) FloatMath.floor(y / mTileSize - mYOffset);
+    	return (int) FloatMath.floor((y - mXOffset) / mTileSize);
     }
     
     public float getX(int i){
