@@ -45,8 +45,6 @@ public class TileView extends View {
      * dimensions. X/Y Tile Counts are the number of tiles that will be drawn.
      */
     
-	protected static int mTileSize = 50;
-
     protected static int mXTileCount;
     protected static int mYTileCount;
 
@@ -56,9 +54,13 @@ public class TileView extends View {
     private static final int VIDE = 0;
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
+    
+    private int mTileWidth;
+    private int mTileHeight;
 
     private Matrix transform;
 	private Matrix intransform;
+
 
     /**
      * A hash that maps integer handles specified by the subclasser to the
@@ -153,9 +155,11 @@ public class TileView extends View {
      * @param tile
      */
     public void loadTile(int key, Drawable tile) {
-        Bitmap bitmap = Bitmap.createBitmap(mTileSize, mTileSize, Bitmap.Config.ARGB_8888);
+    	mTileWidth = tile.getIntrinsicWidth();
+    	mTileHeight = tile.getIntrinsicHeight();
+        Bitmap bitmap = Bitmap.createBitmap(mTileWidth, mTileHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        tile.setBounds(0, 0, mTileSize, mTileSize);
+        tile.setBounds(0, 0, mTileWidth, mTileHeight);
         tile.draw(canvas);
         
         mTileArray[key] = bitmap;
@@ -165,13 +169,13 @@ public class TileView extends View {
      * Resets all tiles to 0 (empty)
      * 
      */
-/*    public void clearTiles() {
+    public void clearTiles() {
         for (int x = 0; x < mXTileCount; x++) {
             for (int y = 0; y < mYTileCount; y++) {
                 setTile(0, x, y);
             }
         }
-    }*/
+    }
 
     /**
      * Used to indicate that a particular tile (set with loadTile and referenced
@@ -194,14 +198,14 @@ public class TileView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-		//this.onSizeChanged(800, 600, this.getWidth(), this.getHeight());
+		this.onSizeChanged(800, 600, this.getWidth(), this.getHeight());
         canvas.concat(transform);
         for (int i = 0; i < mXTileCount; i++) {
             for (int j = 0; j < mYTileCount; j++) {
-                if (mTileGrid[i][j] >= 0) {
-                    canvas.drawBitmap(mTileArray[mTileGrid[i][j]], 
-                    		mXOffset +  i * mTileSize,
-                    		mYOffset +  j * mTileSize,
+                if (getTile(i, j) >= 0) {
+                    canvas.drawBitmap(mTileArray[getTile(i, j)], 
+                    		getX(i),
+                    		getY(j),
                     		mPaint);
                 }
             }
@@ -228,19 +232,19 @@ public class TileView extends View {
     }
     
     public int getI(float x){
-    	return (int) FloatMath.floor((x - mXOffset) / mTileSize);
+    	return (int) FloatMath.floor((x - mXOffset) / mTileWidth);
     }
     
     public int getJ(float y){
-    	return (int) FloatMath.floor((y - mYOffset) / mTileSize);
+    	return (int) FloatMath.floor((y - mYOffset) / mTileHeight);
     }
     
     public float getX(int i){
-    	return (float) (mXOffset +  i * mTileSize);
+    	return (float) (mXOffset +  i * mTileWidth);
     }
     
     public float getY(int j){
-    	return (float) (mYOffset +  j * mTileSize);
+    	return (float) (mYOffset +  j * mTileHeight);
     }
      
     // Evenement du clic souris pour ajout des tours
@@ -260,6 +264,9 @@ public class TileView extends View {
     @Override
     protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
     	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
+    	
+    	mXOffset = (largeur - (mTileWidth * mXTileCount)) / 2;
+    	mYOffset = (hauteur - (mTileHeight * mYTileCount)) / 2;
 
         transform = new Matrix();
 		intransform = new Matrix();
