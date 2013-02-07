@@ -45,18 +45,16 @@ public class TileView extends View {
      * dimensions. X/Y Tile Counts are the number of tiles that will be drawn.
      */
     
-    protected static int mXTileCount;
-    protected static int mYTileCount;
-
-    private static int mXOffset;
-    private static int mYOffset;
-    
+  
     private static final int VIDE = 0;
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
     
     private int mTileWidth;
     private int mTileHeight;
+    
+    protected int mXTileCount;
+    protected int mYTileCount;
 
     private Matrix transform;
 	private Matrix intransform;
@@ -198,7 +196,7 @@ public class TileView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-		this.onSizeChanged(800, 600, this.getWidth(), this.getHeight());
+		//this.onSizeChanged(800, 600, this.getWidth(), this.getHeight());
         canvas.concat(transform);
         for (int i = 0; i < mXTileCount; i++) {
             for (int j = 0; j < mYTileCount; j++) {
@@ -232,19 +230,19 @@ public class TileView extends View {
     }
     
     public int getI(float x){
-    	return (int) FloatMath.floor((x - mXOffset) / mTileWidth);
+    	return (int) FloatMath.floor(x / mTileWidth);
     }
     
     public int getJ(float y){
-    	return (int) FloatMath.floor((y - mYOffset) / mTileHeight);
+    	return (int) FloatMath.floor(y / mTileHeight);
     }
     
     public float getX(int i){
-    	return (float) (mXOffset +  i * mTileWidth);
+    	return (float) (i * mTileWidth);
     }
     
     public float getY(int j){
-    	return (float) (mYOffset +  j * mTileHeight);
+    	return (float) (j * mTileHeight);
     }
      
     // Evenement du clic souris pour ajout des tours
@@ -252,10 +250,12 @@ public class TileView extends View {
 	public boolean onTouchEvent(MotionEvent event) {
 		if(event.getAction() == MotionEvent.ACTION_UP){
 	    	// Conversion des event.x et event.y
-	    	int i = getI(event.getX());
-	    	int j = getJ(event.getY());
+			float[] tabFloat = new float[]{event.getX(), event.getY()};
+			intransform.mapPoints(tabFloat);
+	    	int i = getI(tabFloat[0]);
+	    	int j = getJ(tabFloat[1]);
 			if(getTile(i, j) == VIDE)		ajout(i, j); // méthode ajout d'une tour
-			else if(getTile(i, j) == TOUR)	suppression(i, j); // méthode suppresion d'une tour
+			else if(getTile(i, j) == TOUR)	suppression(i, j); // méthode suppression d'une tour
 		}
 		return true;
 	}
@@ -264,14 +264,11 @@ public class TileView extends View {
     @Override
     protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
     	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
-    	
-    	mXOffset = (largeur - (mTileWidth * mXTileCount)) / 2;
-    	mYOffset = (hauteur - (mTileHeight * mYTileCount)) / 2;
 
         transform = new Matrix();
 		intransform = new Matrix();
-		RectF rectVoulu = new RectF(0, 0, largeur, hauteur);
-		RectF rectReel = new RectF(0, 0, ancien_largeur, ancien_hauteur);
+		RectF rectVoulu = new RectF(0, 0, mTileWidth * mXTileCount, mTileHeight * mYTileCount);
+		RectF rectReel = new RectF(0, 0, largeur, hauteur);
 		transform.setRectToRect(rectVoulu, rectReel, Matrix.ScaleToFit.CENTER);	
 		transform.invert(intransform);
 	}
