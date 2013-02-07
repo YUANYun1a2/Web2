@@ -121,12 +121,14 @@ public class TileView extends View {
     public void ajout(int x, int y){
     	if (mTileGrid[x][y]==VIDE){
     	mTileGrid[x][y] = TOUR;
+    	invalidate();
     	}
     }
     
     public void suppression(int x, int y){
     	if (mTileGrid[x][y] == TOUR){
     		mTileGrid[x][y] = VIDE;
+    		invalidate();
     	}
     }
     
@@ -240,8 +242,14 @@ public class TileView extends View {
 	    	// Conversion des event.x et event.y
 	    	int i = getI(event.getX());
 	    	int j = getJ(event.getY());
-			if(mTileGrid[i][j] == VIDE)		ajout(i, j); // méthode ajout d'une tour
-			else if(mTileGrid[i][j] == TOUR)	suppression(i, j); // méthode suppresion d'une tour
+			if(mTileGrid[i][j] == VIDE){	
+				ajout(i, j); // méthode ajout d'une tour
+				
+				}
+			else if(mTileGrid[i][j] == TOUR){	
+				suppression(i, j); // méthode suppresion d'une tour
+				
+				}
 		}
 		return true;
 	}
