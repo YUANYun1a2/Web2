@@ -87,7 +87,6 @@ public class TileView extends View {
         setFocusable(true);
 
         Resources r = this.getContext().getResources();
-        
         resetTiles(3);
         loadTile(VIDE, r.getDrawable(R.drawable.herbe));
         loadTile(TOUR, r.getDrawable(R.drawable.tour));
@@ -193,10 +192,8 @@ public class TileView extends View {
      * @param tile
      */
     public void loadTile(int key, Drawable tile) {
-    	Resources r =this.getContext().getResources();
-    	Drawable drawable = r.getDrawable(key);
-    	int x = drawable.getIntrinsicWidth();
-    	int y = drawable.getIntrinsicHeight();
+    	int x = tile.getIntrinsicWidth();
+    	int y = tile.getIntrinsicHeight();
         Bitmap bitmap = Bitmap.createBitmap(x, y, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         tile.setBounds(0, 0, x, y);

@@ -4,9 +4,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <net.web2.TileView
-        android:id="@+id/tileView1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="fill_parent"
+        android:layout_weight="0.14" >
+
+        <net.web2.TileView
+            android:id="@+id/tileView1"
+            android:layout_width="239dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tour" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/listView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+            </ListView>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
