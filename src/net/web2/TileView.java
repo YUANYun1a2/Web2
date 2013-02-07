@@ -45,7 +45,7 @@ public class TileView extends View {
      * dimensions. X/Y Tile Counts are the number of tiles that will be drawn.
      */
     
-	protected static int mTileSize = 40;
+	protected static int mTileSize = 50;
 
     protected static int mXTileCount;
     protected static int mYTileCount;
@@ -86,9 +86,6 @@ public class TileView extends View {
     private final Paint mPaint = new Paint();
     
     void init(){
-        mXTileCount=15;
-        mYTileCount=10;
-        mTileSize = 50;
         initTileView();
         mTileGrid = new int[][]{
         		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
@@ -102,19 +99,19 @@ public class TileView extends View {
         		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
         		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1}
         		};
-        mXTileCount=mTileGrid.length;
-        mYTileCount=mTileGrid[0].length;
+        mXTileCount = mTileGrid.length;
+        mYTileCount = mTileGrid[0].length;
     }
 
     public void ajout(int x, int y){
-    	if (mTileGrid[x][y] == VIDE){
-    		mTileGrid[x][y] = TOUR;
+    	if (getTile(x, y) == VIDE){
+    		setTile(TOUR, x, y);
     	}
     }
     
     public void suppression(int x, int y){
-    	if (mTileGrid[x][y] == TOUR){
-    		mTileGrid[x][y] = VIDE;
+    	if (getTile(x, y) == TOUR){
+    		setTile(VIDE, x, y);
     	}
     }
     
@@ -188,14 +185,20 @@ public class TileView extends View {
     public void setTile(int tileindex, int x, int y) {
         mTileGrid[x][y] = tileindex;
     }
+    
+    public int getTile(int x, int y){
+    	return mTileGrid[x][y];
+    }
 
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+		//this.onSizeChanged(800, 600, this.getWidth(), this.getHeight());
+        canvas.concat(transform);
         for (int i = 0; i < mXTileCount; i++) {
             for (int j = 0; j < mYTileCount; j++) {
-                if (mTileGrid[i][j] > 0) {
+                if (mTileGrid[i][j] >= 0) {
                     canvas.drawBitmap(mTileArray[mTileGrid[i][j]], 
                     		mXOffset +  i * mTileSize,
                     		mYOffset +  j * mTileSize,
@@ -240,7 +243,6 @@ public class TileView extends View {
     	return (float) (mYOffset +  j * mTileSize);
     }
      
-    /** @author remi.rischebe **/
     // Evenement du clic souris pour ajout des tours
     @Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -248,8 +250,8 @@ public class TileView extends View {
 	    	// Conversion des event.x et event.y
 	    	int i = getI(event.getX());
 	    	int j = getJ(event.getY());
-			if(mTileGrid[i][j] == VIDE)		ajout(i, j); // méthode ajout d'une tour
-			else if(mTileGrid[i][j] == TOUR)	suppression(i, j); // méthode suppresion d'une tour
+			if(getTile(i, j) == VIDE)		ajout(i, j); // méthode ajout d'une tour
+			else if(getTile(i, j) == TOUR)	suppression(i, j); // méthode suppresion d'une tour
 		}
 		return true;
 	}
@@ -259,10 +261,7 @@ public class TileView extends View {
     protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
     	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
 
-        //mXOffset = ((largeur - (mTileSize * mXTileCount)) / 2);
-        //mYOffset = ((hauteur - (mTileSize * mYTileCount)) / 2);
-        
-		transform = new Matrix();
+        transform = new Matrix();
 		intransform = new Matrix();
 		RectF rectVoulu = new RectF(0, 0, largeur, hauteur);
 		RectF rectReel = new RectF(0, 0, ancien_largeur, ancien_hauteur);
