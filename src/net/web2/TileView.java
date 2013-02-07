@@ -52,7 +52,6 @@ public class TileView extends View {
     private static int mXOffset;
     private static int mYOffset;
     
-
     private static final int VIDE = 0;
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
@@ -61,20 +60,11 @@ public class TileView extends View {
     private Matrix transform;
 	private Matrix intransform;
 
-
-
-    
-
     /**
      * A hash that maps integer handles specified by the subclasser to the
      * drawable that will be used for that reference
      */
     private Bitmap[] mTileArray; 
-   
-    
-    
-    
-    
     
     /**
      * A two-dimensional array of integers in which the number represents the
@@ -84,7 +74,6 @@ public class TileView extends View {
     
     private void initTileView() {
         setFocusable(true);
-
         Resources r = this.getContext().getResources();
         
         resetTiles(3);
@@ -94,13 +83,10 @@ public class TileView extends View {
     	
     }
     
-
-
     private final Paint mPaint = new Paint();
     
     void init(){
-
-        initTileView();
+    	initTileView();
         mTileGrid = new int[][]{
         		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
         		{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
@@ -111,8 +97,8 @@ public class TileView extends View {
         		{0,1,2,0,0,2,1,0,0,1,1,1,1,0,0},
         		{0,1,1,1,1,1,1,0,0,0,0,2,1,0,0},
         		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
-        		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1}
-        		};
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1}};
+        
         mXTileCount=mTileGrid.length;
         mYTileCount=mTileGrid[0].length;
     }
@@ -205,7 +191,7 @@ public class TileView extends View {
         super.onDraw(canvas);
         for (int i = 0; i < mXTileCount; i += 1) {
             for (int j = 0; j < mYTileCount; j += 1) {
-                if (mTileGrid[i][j] > 0) {
+                if (mTileGrid[i][j] >= 0) {
                     canvas.drawBitmap(mTileArray[mTileGrid[i][j]], 
                     		mXOffset +  i * mTileSize,
                     		mYOffset +  j * mTileSize,
@@ -250,10 +236,8 @@ public class TileView extends View {
     protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
     	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
 
-
         mXOffset = ((largeur - (mTileSize * mXTileCount)) / 2);
         mYOffset = ((hauteur - (mTileSize * mYTileCount)) / 2);
-
         
 		transform = new Matrix();
 		intransform = new Matrix();
