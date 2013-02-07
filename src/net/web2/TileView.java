@@ -24,6 +24,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.util.FloatMath;
 import android.view.MotionEvent;
@@ -42,9 +44,8 @@ public class TileView extends View {
      * Width/Height are in pixels, and Drawables will be scaled to fit to these
      * dimensions. X/Y Tile Counts are the number of tiles that will be drawn.
      */
-
-    protected static int mTileSize = 40;
-    int w; int h;
+    
+	protected static int mTileSize = 40;
 
     protected static int mXTileCount;
     protected static int mYTileCount;
@@ -52,18 +53,12 @@ public class TileView extends View {
     private static int mXOffset;
     private static int mYOffset;
     
-
     private static final int VIDE = 0;
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
 
-
     private Matrix transform;
 	private Matrix intransform;
-
-
-
-    
 
     /**
      * A hash that maps integer handles specified by the subclasser to the
@@ -71,11 +66,6 @@ public class TileView extends View {
      */
     private Bitmap[] mTileArray; 
    
-    
-    
-    
-    
-    
     /**
      * A two-dimensional array of integers in which the number represents the
      * index of the tile that should be drawn at that locations
@@ -84,17 +74,14 @@ public class TileView extends View {
     
     private void initTileView() {
         setFocusable(true);
-
         Resources r = this.getContext().getResources();
-        
         resetTiles(3);
         loadTile(VIDE, r.getDrawable(R.drawable.herbe));
         loadTile(TOUR, r.getDrawable(R.drawable.tour));
         loadTile(ROUTE, r.getDrawable(R.drawable.chemin));
-    	
+        update();
     }
     
-
 
     private final Paint mPaint = new Paint();
     
@@ -120,8 +107,8 @@ public class TileView extends View {
     }
 
     public void ajout(int x, int y){
-    	if (mTileGrid[x][y]==VIDE){
-    	mTileGrid[x][y] = TOUR;
+    	if (mTileGrid[x][y] == VIDE){
+    		mTileGrid[x][y] = TOUR;
     	}
     }
     
@@ -135,14 +122,6 @@ public class TileView extends View {
         super(context, attrs, defStyle);
         init();
     }
-        
-        
-/*       
-  		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
-
-        mTileSize = a.getInt(R.styleable.TileView_tileSize, 12);
-        
-        a.recycle();*/
     
 
     public TileView(Context context, AttributeSet attrs) {
@@ -214,8 +193,8 @@ public class TileView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 0; i < mXTileCount; i += 1) {
-            for (int j = 0; j < mYTileCount; j += 1) {
+        for (int i = 0; i < mXTileCount; i++) {
+            for (int j = 0; j < mYTileCount; j++) {
                 if (mTileGrid[i][j] > 0) {
                     canvas.drawBitmap(mTileArray[mTileGrid[i][j]], 
                     		mXOffset +  i * mTileSize,
@@ -224,6 +203,25 @@ public class TileView extends View {
                 }
             }
         }
+    }
+    
+	private RefreshHandler mRedrawHandler = new RefreshHandler();
+
+	class RefreshHandler extends Handler {
+		@Override
+		public void handleMessage(Message msg) {
+			TileView.this.update();
+			TileView.this.invalidate();
+		}
+
+		public void sleep(long delayMillis) {
+			this.removeMessages(0);
+			sendMessageDelayed(obtainMessage(0), delayMillis);
+		}
+	};
+    
+    public void update() {
+		mRedrawHandler.sleep(40);
     }
     
     public int getI(float x){
@@ -261,10 +259,8 @@ public class TileView extends View {
     protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
     	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
 
-
-        mXOffset = ((largeur - (mTileSize * mXTileCount)) / 2);
-        mYOffset = ((hauteur - (mTileSize * mYTileCount)) / 2);
-
+        //mXOffset = ((largeur - (mTileSize * mXTileCount)) / 2);
+        //mYOffset = ((hauteur - (mTileSize * mYTileCount)) / 2);
         
 		transform = new Matrix();
 		intransform = new Matrix();
