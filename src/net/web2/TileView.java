@@ -232,7 +232,7 @@ public class TileView extends View {
     }
     
     public int getJ(float y){
-    	return (int) FloatMath.floor((y - mXOffset) / mTileSize);
+    	return (int) FloatMath.floor((y - mYOffset) / mTileSize);
     }
     
     public float getX(int i){
