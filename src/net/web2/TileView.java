@@ -166,12 +166,17 @@ public class TileView extends View {
      * @param tile
      */
     public void loadTile(int key, Drawable tile) {
-        Bitmap bitmap = Bitmap.createBitmap(mTileSize, mTileSize, Bitmap.Config.ARGB_8888);
+    	Resources r =this.getContext().getResources();
+    	Drawable drawable = r.getDrawable(key);
+    	int x = drawable.getIntrinsicWidth();
+    	int y = drawable.getIntrinsicHeight();
+        Bitmap bitmap = Bitmap.createBitmap(x, y, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        tile.setBounds(0, 0, mTileSize, mTileSize);
+        tile.setBounds(0, 0, x, y);
         tile.draw(canvas);
         
         mTileArray[key] = bitmap;
+        
     }
 
     /**
