@@ -16,6 +16,7 @@
 
 package net.web2;
 
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -44,8 +45,12 @@ public class TileView extends View {
      * Width/Height are in pixels, and Drawables will be scaled to fit to these
      * dimensions. X/Y Tile Counts are the number of tiles that will be drawn.
      */
+
+
+    protected static int mTileSize = 40;
     
-  
+    int w; int h;
+    
     private static final int VIDE = 0;
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
@@ -59,13 +64,12 @@ public class TileView extends View {
     private Matrix transform;
 	private Matrix intransform;
 
-
     /**
      * A hash that maps integer handles specified by the subclasser to the
      * drawable that will be used for that reference
      */
     private Bitmap[] mTileArray; 
-   
+
     /**
      * A two-dimensional array of integers in which the number represents the
      * index of the tile that should be drawn at that locations
@@ -112,6 +116,7 @@ public class TileView extends View {
     public void suppression(int x, int y){
     	if (getTile(x, y) == TOUR){
     		setTile(VIDE, x, y);
+    		invalidate();
     	}
     }
     
@@ -119,12 +124,25 @@ public class TileView extends View {
         super(context, attrs, defStyle);
         init();
     }
+  
+
+    
+        
+        
+/*       
+  		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
+
+        mTileSize = a.getInt(R.styleable.TileView_tileSize, 12);
+        
+        a.recycle();*/
     
 
     public TileView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
+
+
 
     public TileView(Context context) {
         super(context);
