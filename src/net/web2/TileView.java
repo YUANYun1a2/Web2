@@ -113,13 +113,13 @@ public class TileView extends View {
         		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
         		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1}
         		};
-        mXTileCount=mTileGrid.length;
-        mYTileCount=mTileGrid[0].length;
+        mYTileCount=mTileGrid.length;
+        mXTileCount=mTileGrid[0].length;
     }
 
     public void ajout(int x, int y){
-    	if (mTileGrid[x][y]==VIDE){
-    	mTileGrid[x][y] = TOUR;
+    	if (mTileGrid[y][x]==VIDE){
+    	mTileGrid[y][x] = TOUR;
     	}
     }
     
@@ -202,38 +202,41 @@ public class TileView extends View {
      * @param y
      */
     public void setTile(int tileindex, int x, int y) {
-        mTileGrid[y][x] = tileindex;
+        mTileGrid[x][y] = tileindex;
     }
 
 
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 0; i < mXTileCount; i += 1) {
-            for (int j = 0; j < mYTileCount; j += 1) {
+        for (int j = 0; j < mXTileCount; j += 1) {
+            for (int i = 0; i < mYTileCount; i += 1) {
                 if (mTileGrid[i][j] > 0) {
                     canvas.drawBitmap(mTileArray[mTileGrid[i][j]], 
-                    		mXOffset +  i * mTileSize,
-                    		mYOffset +  j * mTileSize,
+                    		mXOffset +  j * mTileSize,
+                    		mYOffset +  i * mTileSize,
                     		mPaint);
                 }
             }
         }
     }
     
-    public int getJ(float x){
+    public int getI(float x){
     	return (int) FloatMath.floor((x - mXOffset) / mTileSize);
     }
-    public int getI(float y){
+    
+    public int getJ(float y){
     	return (int) FloatMath.floor((y - mXOffset) / mTileSize);
     }
+    
     public float getX(int i){
-    	return (float) (mXOffset + i * mTileSize);
+    	return (float) (mXOffset +  i * mTileSize);
     }
+    
     public float getY(int j){
     	return (float) (mYOffset +  j * mTileSize);
     }
-    
+     
     /** @author remi.rischebe **/
     // Evenement du clic souris pour ajout des tours
     @Override
