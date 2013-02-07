@@ -102,7 +102,26 @@ public class TileView extends View {
     void init(){
         mXTileCount=15;
         mYTileCount=10;
+<<<<<<< HEAD
         mTileGrid = new int [15][10];
+=======
+        mTileSize = 50;
+        initTileView();
+        mTileGrid = new int[][]{
+        		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,0,2,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,1,0,0,0,0,1,1,1,1,0,0,0,0,0},
+        		{0,1,0,0,0,0,1,0,0,1,2,0,0,0,0},
+        		{0,1,2,0,0,2,1,0,0,1,1,1,1,0,0},
+        		{0,1,1,1,1,1,1,0,0,0,0,2,1,0,0},
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1}
+        		};
+        mXTileCount=mTileGrid.length;
+        mYTileCount=mTileGrid[0].length;
+>>>>>>> refs/remotes/upstream/master
     }
 
     public void ajout(int x, int y){
@@ -121,6 +140,7 @@ public class TileView extends View {
         super(context, attrs, defStyle);
         
         init();
+<<<<<<< HEAD
         int[][] mTileGrid = new int[][]{
         		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
         		{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
@@ -137,6 +157,13 @@ public class TileView extends View {
         };
         
 /*        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
+=======
+    }
+        
+        
+/*       
+  		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
+>>>>>>> refs/remotes/upstream/master
 
         mTileSize = a.getInt(R.styleable.TileView_tileSize, 12);
         
