@@ -143,8 +143,7 @@ public class TileView extends View {
         super(context);
         init();
     }
-
-    
+ 
     
     /**
      * Rests the internal array of Bitmaps used for drawing tiles, and
@@ -262,5 +261,12 @@ public class TileView extends View {
 		transform.setRectToRect(rectVoulu, rectReel, Matrix.ScaleToFit.CENTER);	
 		transform.invert(intransform);
 	}
+ 
     
+  
+		
 }
+    
+    
+
+
