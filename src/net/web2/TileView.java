@@ -202,7 +202,7 @@ public class TileView extends View {
      * @param y
      */
     public void setTile(int tileindex, int x, int y) {
-        mTileGrid[x][y] = tileindex;
+        mTileGrid[y][x] = tileindex;
     }
 
 
@@ -221,22 +221,19 @@ public class TileView extends View {
         }
     }
     
-    public int getI(float x){
+    public int getJ(float x){
     	return (int) FloatMath.floor((x - mXOffset) / mTileSize);
     }
-    
-    public int getJ(float y){
+    public int getI(float y){
     	return (int) FloatMath.floor((y - mXOffset) / mTileSize);
     }
-    
     public float getX(int i){
-    	return (float) (mXOffset +  i * mTileSize);
+    	return (float) (mXOffset + i * mTileSize);
     }
-    
     public float getY(int j){
     	return (float) (mYOffset +  j * mTileSize);
     }
-     
+    
     /** @author remi.rischebe **/
     // Evenement du clic souris pour ajout des tours
     @Override
