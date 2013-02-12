@@ -4,6 +4,7 @@ public class Chemin {
 	int[] debut;
 	int[] fin;
 	private int[][] run;
+	TileView grille;
 	
 	void run(){
 		run = new int[][]{
@@ -14,10 +15,10 @@ public class Chemin {
 		
 	}
 	
-	private int[] getCoord(int x){
-		return run[x];
+	private int[] getFinal(){
+		return run[run.length-1];
 	}
-	
-/*	debut = getCoord();
-	fin = getCoord();*/
+	private int[] getDebut(){
+		return run[0];
+	}
 }
