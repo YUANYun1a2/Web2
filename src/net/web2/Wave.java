@@ -17,9 +17,9 @@ public class Wave {
 	}
 	
 	public void draw(Canvas canvas) {
-		for(Monstre montre: liste_monstres){
-			//monstre.draw(canvas);
-			//canvas.drawBitmap(monstre.bitmap, monstre.x, monstre.y, monstre.paint);
+		for(Monstre monstre: liste_monstres){
+			monstre.draw(canvas);
+			canvas.drawBitmap(monstre.bitmap, monstre.x, monstre.y, monstre.paint);
 		}
 	}
 
