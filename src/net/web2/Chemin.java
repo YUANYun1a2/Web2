@@ -13,6 +13,7 @@ public class Chemin {
 				{6,11},{6,12},{7,12},{8,12},{9,12},{9,13},{9,14}};
 	}
 	
+
 	private int[] getDebut(){
 		return debut = run[0];
 	}
