@@ -3,7 +3,6 @@ package net.web2;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.RectF;
 
 public class Monstre {
 	
@@ -15,8 +14,7 @@ public class Monstre {
 	TileView grille;
 	Paint paint;
 	Wave wave;
-	float x;
-	float y;
+
 	
 
 	public Monstre(Bitmap bitmap, float position, Wave wave, Chemin chemin){
@@ -27,21 +25,19 @@ public class Monstre {
 		paint = new Paint();
 	}
 	
-	private void move(){
+	void move(){
 		position = position + 1; // ou ++position
 	}
 	
 	public void draw(Canvas canvas) {
-		canvas.drawBitmap(bitmap, x, y, paint);
-	}
-
-	public float getY() {
-		// TODO Auto-generated method stub
-		return 0;
+		canvas.drawBitmap(bitmap, getX(), getY(), paint);
 	}
 
 	public float getX() {
-		// TODO Auto-generated method stub
-		return 0;
+		return chemin.getX(position);
+	}
+	
+	public float getY() {
+		return chemin.getY(position);
 	}
 }

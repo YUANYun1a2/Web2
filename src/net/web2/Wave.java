@@ -24,5 +24,11 @@ public class Wave {
 			canvas.drawBitmap(monstre.bitmap, monstre.getX(), monstre.getY(), monstre.paint);
 		}
 	}
+	
+	public void move(){
+		for(Monstre monstre: liste_monstres){
+			monstre.move();
+		}
+	}
 
 }

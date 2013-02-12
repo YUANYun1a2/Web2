@@ -84,7 +84,7 @@ public class TileView extends View {
         loadTile(TOUR, r.getDrawable(R.drawable.tour));
         loadTile(ROUTE, r.getDrawable(R.drawable.chemin));
         bmp_ennemi = loadImage(R.drawable.ennemi);
-        update();
+      
     }
     
 
@@ -106,8 +106,10 @@ public class TileView extends View {
         		};
         mYTileCount = mTileGrid.length;
         mXTileCount = mTileGrid[0].length;
-        chemin = new Chemin();
+        chemin = new Chemin(this);
 		vague_monstres = new Wave(bmp_ennemi, chemin);
+		
+		update();
     }
 
     public void ajout(int x, int y){
@@ -247,7 +249,8 @@ public class TileView extends View {
 	};
     
     public void update() {
-		mRedrawHandler.sleep(40);
+    	vague_monstres.move();
+		mRedrawHandler.sleep(2000);
     }
     
     public int getI(float x){
