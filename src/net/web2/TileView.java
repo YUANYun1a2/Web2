@@ -50,6 +50,13 @@ public class TileView extends View {
     protected static int mTileSize = 40;
     
     int w; int h;
+
+    protected static int mXTileCount;
+    protected static int mYTileCount;
+
+    private static int mXOffset;
+
+    private static int mYOffset;
     
     private static final int VIDE = 0;
     private static final int ROUTE = 1;
@@ -57,9 +64,8 @@ public class TileView extends View {
     
     private int mTileWidth;
     private int mTileHeight;
-    
-    protected int mXTileCount;
-    protected int mYTileCount;
+
+    private Monstre ENEMY;
 
     private Matrix transform;
 	private Matrix intransform;
@@ -79,7 +85,7 @@ public class TileView extends View {
     private void initTileView() {
         setFocusable(true);
         Resources r = this.getContext().getResources();
-        resetTiles(3);
+        resetTiles(4);
         loadTile(VIDE, r.getDrawable(R.drawable.herbe));
         loadTile(TOUR, r.getDrawable(R.drawable.tour));
         loadTile(ROUTE, r.getDrawable(R.drawable.chemin));
@@ -148,8 +154,6 @@ public class TileView extends View {
         super(context);
         init();
     }
-
-    
     
     /**
      * Rests the internal array of Bitmaps used for drawing tiles, and
@@ -161,7 +165,6 @@ public class TileView extends View {
     public void resetTiles(int tilecount) {
     	mTileArray = new Bitmap[tilecount];
     }
-
 
     /**
      * Function to set the specified Drawable as the tile for a particular
@@ -209,7 +212,6 @@ public class TileView extends View {
     public int getTile(int x, int y){
     	return mTileGrid[x][y];
     }
-
 
     @Override
     public void onDraw(Canvas canvas) {
