@@ -51,8 +51,9 @@ public class TileView extends View {
     protected static int mYTileCount;
 
     private static int mXOffset;
-    private static int mYOffset;
 
+    private static int mYOffset;
+    
     private static final int VIDE = 0;
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
@@ -84,12 +85,10 @@ public class TileView extends View {
         loadTile(ROUTE, r.getDrawable(R.drawable.chemin));
         
     }
-
 	private final Paint mPaint = new Paint();
     
     void init(){
-
-        initTileView();
+    	initTileView();
         mTileGrid = new int[][]{
         		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
         		{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
@@ -102,14 +101,13 @@ public class TileView extends View {
         		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
         		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1}
         		};
-        mXTileCount=mTileGrid.length;
-        mYTileCount=mTileGrid[0].length;
+        mYTileCount=mTileGrid.length;
+        mXTileCount=mTileGrid[0].length;
     }
 
     public void ajout(int x, int y){
-    	if (mTileGrid[x][y]==VIDE){
-    	mTileGrid[x][y] = TOUR;
-    	invalidate();
+    	if (mTileGrid[y][x]==VIDE){
+    	mTileGrid[y][x] = TOUR;
     	}
     }
     
@@ -122,17 +120,33 @@ public class TileView extends View {
     
     public TileView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+
         init();
         };    
 
+    
+        
+        
+/*       
+  		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
+
+        mTileSize = a.getInt(R.styleable.TileView_tileSize, 12);
+        
+        a.recycle();*/
+    
+
     public TileView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         init();
     }
+
+
 
     public TileView(Context context) {
         super(context);
         init();
+
     }
     
     /**
@@ -190,18 +204,17 @@ public class TileView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 0; i < mXTileCount; i += 1) {
-            for (int j = 0; j < mYTileCount; j += 1) {
+        for (int j = 0; j < mXTileCount; j += 1) {
+            for (int i = 0; i < mYTileCount; i += 1) {
                 if (mTileGrid[i][j] >= 0) {
                     canvas.drawBitmap(mTileArray[mTileGrid[i][j]], 
-                    		mXOffset +  i * mTileSize,
-                    		mYOffset +  j * mTileSize,
+                    		mXOffset +  j * mTileSize,
+                    		mYOffset +  i * mTileSize,
                     		mPaint);
                 }
             }
         }
     }
-    
     public int getI(float x){
     	return (int) FloatMath.floor((x - mXOffset) / mTileSize);
     }
@@ -243,10 +256,8 @@ public class TileView extends View {
     protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
     	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
 
-
         mXOffset = ((largeur - (mTileSize * mXTileCount)) / 2);
         mYOffset = ((hauteur - (mTileSize * mYTileCount)) / 2);
-
         
 		transform = new Matrix();
 		intransform = new Matrix();
