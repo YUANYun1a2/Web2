@@ -52,30 +52,21 @@ public class TileView extends View {
 
     private static int mXOffset;
     private static int mYOffset;
-    
 
     private static final int VIDE = 0;
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
+    private Monstre ENEMY;
 
 
     private Matrix transform;
 	private Matrix intransform;
-
-
-
-    
 
     /**
      * A hash that maps integer handles specified by the subclasser to the
      * drawable that will be used for that reference
      */
     private Bitmap[] mTileArray; 
-   
-    
-    
-    
-    
     
     /**
      * A two-dimensional array of integers in which the number represents the
@@ -85,19 +76,16 @@ public class TileView extends View {
     
     private void initTileView() {
         setFocusable(true);
-
         Resources r = this.getContext().getResources();
         
-        resetTiles(3);
+        resetTiles(4);
         loadTile(VIDE, r.getDrawable(R.drawable.herbe));
         loadTile(TOUR, r.getDrawable(R.drawable.tour));
         loadTile(ROUTE, r.getDrawable(R.drawable.chemin));
-    	
+        
     }
-    
 
-
-    private final Paint mPaint = new Paint();
+	private final Paint mPaint = new Paint();
     
     void init(){
 
@@ -146,8 +134,6 @@ public class TileView extends View {
         super(context);
         init();
     }
-
-    
     
     /**
      * Rests the internal array of Bitmaps used for drawing tiles, and
@@ -159,7 +145,6 @@ public class TileView extends View {
     public void resetTiles(int tilecount) {
     	mTileArray = new Bitmap[tilecount];
     }
-
 
     /**
      * Function to set the specified Drawable as the tile for a particular
@@ -202,13 +187,12 @@ public class TileView extends View {
         mTileGrid[x][y] = tileindex;
     }
 
-
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         for (int i = 0; i < mXTileCount; i += 1) {
             for (int j = 0; j < mYTileCount; j += 1) {
-                if (mTileGrid[i][j] > 0) {
+                if (mTileGrid[i][j] >= 0) {
                     canvas.drawBitmap(mTileArray[mTileGrid[i][j]], 
                     		mXOffset +  i * mTileSize,
                     		mYOffset +  j * mTileSize,
