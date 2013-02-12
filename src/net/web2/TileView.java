@@ -61,7 +61,6 @@ public class TileView extends View {
     private int mTileWidth;
     private int mTileHeight;
 
-    private Monstre ennemi;
 	private Wave vague_monstres;
 
     private Matrix transform;

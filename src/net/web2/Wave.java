@@ -13,10 +13,9 @@ public class Wave {
 	public Wave(Bitmap bitmap) {
 		this.bitmap = bitmap;
 		liste_monstres = new ArrayList<Monstre>();
-		liste_monstres.add(new Monstre(bitmap, (float) 10, (float) 10, this));
-		liste_monstres.add(new Monstre(bitmap, (float) 100, (float) 10, this));
-		liste_monstres.add(new Monstre(bitmap, (float) 200, (float) 10, this));
-
+		liste_monstres.add(new Monstre(bitmap, (float) 0, (float) 0, this));
+		liste_monstres.add(new Monstre(bitmap, (float) 100, (float) 0, this));
+		liste_monstres.add(new Monstre(bitmap, (float) 200, (float) 0, this));
 	}
 	
 	public void draw(Canvas canvas) {
