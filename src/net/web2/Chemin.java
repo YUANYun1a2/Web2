@@ -12,12 +12,30 @@ public class Chemin {
 				{6,6},{5,6},{4,6},{4,7},{4,8},{4,9},{5,9},{6,9},{6,10},
 				{6,11},{6,12},{7,12},{8,12},{9,12},{9,13},{9,14}};
 	}
-	
 
 	private int[] getDebut(){
 		return debut = run[0];
 	}
+	
 	private int[] getFinal(){
 		return fin = run[run.length-1];
+	}
+
+	public float getX(float position) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public float getY(float position) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	float getXInterpolation(float position){
+		  int i = (int) position; //indice de la case que l'on quitte
+		  float x1 = getX(i); //abscisse de la case que l'on quitte
+		  float x2 = getX(i+1); //abscisse de la case où l'on arrive
+		  float c  = position-i; //fraction du trajet parcouru entre les deux cases
+		  return x2*c + x1*(1-c); //combinaison des  abscisses.
 	}
 }
