@@ -214,7 +214,6 @@ public class TileView extends View {
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-		//this.onSizeChanged(800, 600, this.getWidth(), this.getHeight());
         canvas.concat(transform);
         for (int i = 0; i < mXTileCount; i++) {
             for (int j = 0; j < mYTileCount; j++) {
