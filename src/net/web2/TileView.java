@@ -47,9 +47,7 @@ public class TileView extends View {
      */
 
 
-    protected static int mTileSize = 40;
-    
-    int w; int h;
+	int w, h;
 
     protected static int mXTileCount;
     protected static int mYTileCount;
