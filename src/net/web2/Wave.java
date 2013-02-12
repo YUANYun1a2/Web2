@@ -16,8 +16,8 @@ public class Wave {
 		liste_monstres = new ArrayList<Monstre>();
 		
 		liste_monstres.add(new Monstre(bitmap, position, this));
-		liste_monstres.add(new Monstre(bitmap, position, this));
-		liste_monstres.add(new Monstre(bitmap, position, this));
+		liste_monstres.add(new Monstre(bitmap, ++position, this));
+		liste_monstres.add(new Monstre(bitmap, ++position, this));
 
 	}
 	
