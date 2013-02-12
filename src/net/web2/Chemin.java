@@ -17,7 +17,4 @@ public class Chemin {
 	private int[] getFinal(){
 		return run[run.length-1];
 	}
-	
-/*	debut = getCoord();
-	fin = getCoord();*/
 }
