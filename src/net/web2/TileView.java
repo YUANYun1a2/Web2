@@ -224,6 +224,7 @@ public class TileView extends View {
                 }
             }
         }
+		vague_monstres.draw(canvas);
     }
     
 	private RefreshHandler mRedrawHandler = new RefreshHandler();
