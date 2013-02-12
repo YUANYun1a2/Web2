@@ -52,8 +52,8 @@ public class TileView extends View {
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
     
-    private int mTileWidth;
-    private int mTileHeight;
+    public int mTileWidth;
+    public int mTileHeight;
 
 	private Wave vague_monstres;
 
@@ -61,6 +61,7 @@ public class TileView extends View {
 	private Matrix intransform;
 	
 	private Bitmap bmp_ennemi;
+	private Chemin chemin;
 
     /**
      * A hash that maps integer handles specified by the subclasser to the
@@ -105,7 +106,8 @@ public class TileView extends View {
         		};
         mYTileCount = mTileGrid.length;
         mXTileCount = mTileGrid[0].length;
-		vague_monstres = new Wave(bmp_ennemi);
+        chemin = new Chemin();
+		vague_monstres = new Wave(bmp_ennemi, chemin);
     }
 
     public void ajout(int x, int y){
@@ -256,12 +258,12 @@ public class TileView extends View {
     	return (int) FloatMath.floor(y / mTileHeight);
     }
     
-    public float getX(int i){
-    	return (float) (i * mTileWidth);
+    public float getX(float position){
+    	return (float) (position * mTileWidth);
     }
     
-    public float getY(int j){
-    	return (float) (j * mTileHeight);
+    public float getY(float position){
+    	return (float) (position * mTileHeight);
     }
      
     // Evenement du clic souris pour ajout des tours

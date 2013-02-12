@@ -1,9 +1,11 @@
 package net.web2;
 
 public class Chemin {
-	int[] debut;
-	int[] fin;
+	int[] debut, fin;
 	private int[][] run;
+	int i, j;
+	
+	TileView grille;
 
 	public Chemin(){
 		run = new int[][]{
@@ -20,16 +22,24 @@ public class Chemin {
 	private int[] getFinal(){
 		return fin = run[run.length-1];
 	}
-
-	public float getX(float position) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	public float getI(float position){
+		return i = run[(int) position][0];
 	}
 
-	public float getY(float position) {
-		// TODO Auto-generated method stub
-		return 0;
+
+	public float getJ(float position){
+		return j = run[(int) position][1];
 	}
+	
+    public float getX(int position){
+    	return (getI(position)* grille.mTileWidth);
+    }
+    
+    public float getY(int position){
+    	return (getJ(position) * grille.mTileHeight);
+        
+    }
 	
 	float getXInterpolation(float position){
 		  int i = (int) position; //indice de la case que l'on quitte
