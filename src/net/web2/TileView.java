@@ -52,6 +52,8 @@ public class TileView extends View {
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
     
+    public int vie;
+    
     public int mTileWidth;
     public int mTileHeight;
 
@@ -91,6 +93,7 @@ public class TileView extends View {
     private final Paint mPaint = new Paint();
     
     void init(){
+    	vie = 10; //Valeur temporaire pour le moment
         initTileView();
         mTileGrid = new int[][]{
         		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
@@ -220,6 +223,7 @@ public class TileView extends View {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.concat(transform);
+		canvas.drawText(String.Valueof(vie), 0, 0, mpaint);
         for (int i = 0; i < mXTileCount; i++) {
             for (int j = 0; j < mYTileCount; j++) {
                 if (getTile(i, j) >= 0) {
@@ -249,7 +253,8 @@ public class TileView extends View {
 	};
     
     public void update() {
-    	vague_monstres.move();
+		if(vague_monstres.arrived)	vie--;
+    	else vague_monstres.move();
 		mRedrawHandler.sleep(2000);
     }
     
@@ -278,8 +283,8 @@ public class TileView extends View {
 			intransform.mapPoints(tabFloat);
 	    	int i = getI(tabFloat[0]);
 	    	int j = getJ(tabFloat[1]);
-			if(getTile(i, j) == VIDE)		ajout(i, j); // méthode ajout d'une tour
-			else if(getTile(i, j) == TOUR)	suppression(i, j); // méthode suppression d'une tour
+			if(getTile(i, j) == VIDE)		ajout(i, j); // methode ajout d'une tour
+			else if(getTile(i, j) == TOUR)	suppression(i, j); // methode suppression d'une tour
 		}
 		return true;
 	}
