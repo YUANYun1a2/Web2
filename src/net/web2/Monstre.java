@@ -26,7 +26,7 @@ public class Monstre {
 	}
 	
 	void move(){
-		position = chemin.getXInterpolation(position) + 1;
+		position++;		//position = chemin.getXInterpolation(position) + 1;
 	}
 	
 	public void draw(Canvas canvas) {
