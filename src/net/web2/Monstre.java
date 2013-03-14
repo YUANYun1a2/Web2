@@ -15,8 +15,6 @@ public class Monstre {
 	Paint paint;
 	Wave wave;
 
-	
-
 	public Monstre(Bitmap bitmap, float position, Wave wave, Chemin chemin){
 		this.bitmap = bitmap;
 		this.position = position;
@@ -26,7 +24,7 @@ public class Monstre {
 	}
 	
 	void move(){
-		position++;		//position = chemin.getXInterpolation(position) + 1;
+		position++;
 	}
 	
 	public void draw(Canvas canvas) {
@@ -34,10 +32,10 @@ public class Monstre {
 	}
 
 	public float getX() {
-		return chemin.getX(position);
+		return chemin.getXInterpolation(position);
 	}
 	
 	public float getY() {
-		return chemin.getY(position);
+		return chemin.getYInterpolation(position);
 	}
 }
