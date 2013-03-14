@@ -16,6 +16,8 @@
 
 package net.web2;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -62,7 +64,9 @@ public class TileView extends View {
 	
 	private Bitmap bmp_ennemi;
 	private Chemin chemin;
-
+	
+	private ArrayList<Tour> liste_Tours;
+	
     /**
      * A hash that maps integer handles specified by the subclasser to the
      * drawable that will be used for that reference
@@ -124,6 +128,8 @@ public class TileView extends View {
     		invalidate();
     	}
     }
+    
+    
     
     public TileView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -278,8 +284,8 @@ public class TileView extends View {
 			intransform.mapPoints(tabFloat);
 	    	int i = getI(tabFloat[0]);
 	    	int j = getJ(tabFloat[1]);
-			if(getTile(i, j) == VIDE)		ajout(i, j); // méthode ajout d'une tour
-			else if(getTile(i, j) == TOUR)	suppression(i, j); // méthode suppression d'une tour
+			if(getTile(i, j) == VIDE)		ajout(i, j); // mï¿½thode ajout d'une tour
+			else if(getTile(i, j) == TOUR)	suppression(i, j); // mï¿½thode suppression d'une tour
 		}
 		return true;
 	}
