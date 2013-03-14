@@ -1,6 +1,7 @@
 package net.web2;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -35,10 +36,10 @@ public class Wave {
 		Iterator<Monstre> it = this.liste_monstres.iterator();
 		while(it.hasNext()){
 			Monstre monstre = it.next();
-			if(monstre.position == chemin.getFinal){
-				it.remove();
-				return true;
-			}
+			//if(monstre.position == chemin.getFinal()){
+				//it.remove();
+				//return true;
+			//}
 		}
 		return false;
 	}

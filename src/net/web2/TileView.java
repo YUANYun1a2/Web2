@@ -227,8 +227,8 @@ public class TileView extends View {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.concat(transform);
-		canvas.drawText(String.Valueof(vie), 0, 0, mpaint);
-		canvas.drawText(String.Valueof(argent), 0, 50, mpaint);
+		canvas.drawText(String.valueOf(vie), 0, 0, mPaint);
+		canvas.drawText(String.valueOf(argent), 0, 50, mPaint);
         for (int i = 0; i < mXTileCount; i++) {
             for (int j = 0; j < mYTileCount; j++) {
                 if (getTile(i, j) >= 0) {
@@ -258,7 +258,7 @@ public class TileView extends View {
 	};
     
     public void update() {
-		if(vague_monstres.arrived)	vie--;
+		if(vague_monstres.arrived(chemin))	vie--;
     	else vague_monstres.move();
 		mRedrawHandler.sleep(2000);
     }
