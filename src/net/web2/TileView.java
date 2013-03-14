@@ -18,6 +18,8 @@ package net.web2;
 
 import android.content.Context;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -312,4 +314,20 @@ public class TileView extends View {
 		transform.invert(intransform);
 	}
     
+    public void ciblage(){
+    	Iterator<Monstre> it = vague_monstres.liste_monstres.iterator() ;
+    	while(it.hasNext()){
+    		Monstre monstre  = it.next();
+    		
+	    		Iterator<Tour> itt = liste_Tours.iterator() ;
+	        	while(it.hasNext()){
+	        		Tour tour = itt.next();
+	        		float x1 = (getX(tour.i))/mTileWidth; // recuperation x de la tour
+	        		float y1 = (getY(tour.j))/mTileHeight; // recuperation y de la tour
+	        		float x2 = (monstre.getX())/mTileWidth; // recuperation x du monstre
+	        		float y2 = (monstre.getY())/mTileHeight; // recuperation y du monstre
+	        		double d = Math.hypot((x2-x1), (y2-y1));
+	        	}
+    	}
+    }
 }

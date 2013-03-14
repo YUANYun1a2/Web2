@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 
 public class Tour {
 	int i, j;
-	int porteeMin, porteeMax;
+	int porteeMin = 0, porteeMax = 2;
 	int puissance;
 	
 	public Tour(int i, int j, int porteeMin, int porteeMax, int puissance) {
@@ -15,4 +15,9 @@ public class Tour {
 		this.puissance = puissance;
 	}
 	
+	public void cible(double d, Monstre monstre) {
+		if (porteeMin<d && d<porteeMax){
+			// Alors on tir
+		}
+	}
 }
