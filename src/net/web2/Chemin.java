@@ -24,6 +24,10 @@ public class Chemin {
 		return fin = run[run.length-1];
 	}
 	
+	public int getPositionFinale(){
+		return run.length-1;
+	}
+	
 	public float getI(float position){
 		return i = run[(int) position][1];
 	}
