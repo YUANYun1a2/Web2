@@ -4,6 +4,43 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="23dp"
+            android:layout_height="12dp"
+            android:layout_weight="0"
+            android:maxHeight="12dp"
+            android:maxWidth="23dp"
+            android:src="@drawable/cour" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="TextView" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="23dp"
+            android:layout_height="12dp"
+            android:layout_weight="0"
+            android:src="@drawable/argent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:text="TextView" />
+
+    </LinearLayout>
+
     <net.web2.TileView
         android:id="@+id/tileView_jeu"
         android:layout_width="wrap_content"

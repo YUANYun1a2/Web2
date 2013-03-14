@@ -30,6 +30,7 @@ import android.util.AttributeSet;
 import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * TileView: a View-variant designed for handling arrays of "icons" or other
@@ -74,9 +75,18 @@ public class TileView extends View {
      * index of the tile that should be drawn at that locations
      */
     private int[][] mTileGrid;
+    private TextView vieView;
+    private TextView argentView;
 
-    
-    private void initTileView() {
+    public void setVieView(TextView vieView) {
+		this.vieView = vieView;
+	}
+
+	public void setArgentView(TextView argentView) {
+		this.argentView = argentView;
+	}
+
+	private void initTileView() {
         setFocusable(true);
         Resources r = this.getContext().getResources();
         resetTiles(4);
@@ -278,8 +288,8 @@ public class TileView extends View {
 			intransform.mapPoints(tabFloat);
 	    	int i = getI(tabFloat[0]);
 	    	int j = getJ(tabFloat[1]);
-			if(getTile(i, j) == VIDE)		ajout(i, j); // méthode ajout d'une tour
-			else if(getTile(i, j) == TOUR)	suppression(i, j); // méthode suppression d'une tour
+			if(getTile(i, j) == VIDE)		ajout(i, j); // mï¿½thode ajout d'une tour
+			else if(getTile(i, j) == TOUR)	suppression(i, j); // mï¿½thode suppression d'une tour
 		}
 		return true;
 	}
