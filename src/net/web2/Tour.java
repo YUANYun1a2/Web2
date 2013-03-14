@@ -19,7 +19,7 @@ public class Tour {
 	
 	public void cible(double d, Monstre monstre) {
 		if (porteeMin<d && d<porteeMax){
-			// Alors on tir
+			cible = monstre;
 		}
 	}
 }

@@ -327,6 +327,7 @@ public class TileView extends View {
 	}
     
     public void ciblage(){
+    	
     	Iterator<Monstre> it = vague_monstres.liste_monstres.iterator() ;
     	while(it.hasNext()){
     		Monstre monstre  = it.next();
@@ -334,6 +335,7 @@ public class TileView extends View {
 	    		Iterator<Tour> itt = liste_Tours.iterator() ;
 	        	while(it.hasNext()){
 	        		Tour tour = itt.next();
+	        		tour.cible = null;
 	        		float x1 = (getX(tour.i))/mTileWidth; // recuperation x de la tour
 	        		float y1 = (getY(tour.j))/mTileHeight; // recuperation y de la tour
 	        		float x2 = (monstre.getX())/mTileWidth; // recuperation x du monstre
