@@ -8,38 +8,39 @@ public class Monstre {
 	
 	Chemin chemin;
 	Bitmap bitmap;
-	float dDD; // distance Depuis Début
+	float dDD; // distance Depuis Dï¿½but
 	float vx=1; // vitesse
 	float position;
 	TileView grille;
 	Paint paint;
 	Wave wave;
-	float x;
-	float y;
+	int life;
 	
-	public Monstre(Bitmap bitmap, float position, Wave wave){
+
+	public Monstre(Bitmap bitmap, float position, Wave wave, Chemin chemin){
 		this.bitmap = bitmap;
-		this.x = x;
-		this.y = y;
+		this.position = position;
 		this.wave = wave;
+		this.chemin = chemin;
 		paint = new Paint();
 	}
 	
-	private int getXposition(){
-		x = chemin.getX(position);
-		return (int) x;
-	}
-	
-	private int getYposition(){
-		y = chemin.getY(position);
-		return (int) y;
-	}
-	
-	private void move(){
-		position = position + 1; // ou ++position
+	void move(){
+		position++;		//position = chemin.getXInterpolation(position) + 1;
 	}
 	
 	public void draw(Canvas canvas) {
-		canvas.drawBitmap(bitmap, x, y, paint);
+		canvas.drawBitmap(bitmap, getX(), getY(), paint);
+	}
+
+	public float getX() {
+		return chemin.getX(position);
+	}
+	
+	public float getY() {
+		return chemin.getY(position);
+	}
+	void init(){
+		life = 10; //Valeur temporaire pour le moment
 	}
 }

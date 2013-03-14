@@ -16,9 +16,6 @@
 
 package net.web2;
 
-
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -34,7 +31,6 @@ import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.View;
 
-
 /**
  * TileView: a View-variant designed for handling arrays of "icons" or other
  * drawables.
@@ -47,8 +43,6 @@ public class TileView extends View {
      * Width/Height are in pixels, and Drawables will be scaled to fit to these
      * dimensions. X/Y Tile Counts are the number of tiles that will be drawn.
      */
-
-
 	int w, h;
 
     protected static int mXTileCount;
@@ -58,16 +52,19 @@ public class TileView extends View {
     private static final int ROUTE = 1;
     private static final int TOUR = 2;
     
-    private int mTileWidth;
-    private int mTileHeight;
+    public int vie;
+	public int argent;
+    
+    public int mTileWidth;
+    public int mTileHeight;
 
-    private Monstre ennemi;
 	private Wave vague_monstres;
 
     private Matrix transform;
 	private Matrix intransform;
 	
 	private Bitmap bmp_ennemi;
+	private Chemin chemin;
 
     /**
      * A hash that maps integer handles specified by the subclasser to the
@@ -90,13 +87,15 @@ public class TileView extends View {
         loadTile(TOUR, r.getDrawable(R.drawable.tour));
         loadTile(ROUTE, r.getDrawable(R.drawable.chemin));
         bmp_ennemi = loadImage(R.drawable.ennemi);
-        update();
+      
     }
     
 
     private final Paint mPaint = new Paint();
     
     void init(){
+    	vie = 10; //Valeur temporaire pour le moment
+		argent = 500; //Valeur temporaire pour le moment
         initTileView();
         mTileGrid = new int[][]{
         		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
@@ -112,18 +111,23 @@ public class TileView extends View {
         		};
         mYTileCount = mTileGrid.length;
         mXTileCount = mTileGrid[0].length;
-		vague_monstres = new Wave(bmp_ennemi);
+        chemin = new Chemin(this);
+		vague_monstres = new Wave(bmp_ennemi, chemin);
+		
+		update();
     }
 
     public void ajout(int x, int y){
-    	if (getTile(x, y) == VIDE){
+    	if (getTile(x, y) == VIDE && argent >= 100){
     		setTile(TOUR, x, y);
+			argent -= 100;
     	}
     }
     
     public void suppression(int x, int y){
     	if (getTile(x, y) == TOUR){
     		setTile(VIDE, x, y);
+			argent += 50;
     		invalidate();
     	}
     }
@@ -132,23 +136,18 @@ public class TileView extends View {
         super(context, attrs, defStyle);
         init();
     }
-  
-        
-/*       
-  		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
+          
+/* 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TileView);
 
         mTileSize = a.getInt(R.styleable.TileView_tileSize, 12);
         
         a.recycle();
 */
     
-
     public TileView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-
-
 
     public TileView(Context context) {
         super(context);
@@ -228,6 +227,8 @@ public class TileView extends View {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.concat(transform);
+		canvas.drawText(String.valueOf(vie), 0, 0, mPaint);
+		canvas.drawText(String.valueOf(argent), 0, 50, mPaint);
         for (int i = 0; i < mXTileCount; i++) {
             for (int j = 0; j < mYTileCount; j++) {
                 if (getTile(i, j) >= 0) {
@@ -257,7 +258,9 @@ public class TileView extends View {
 	};
     
     public void update() {
-		mRedrawHandler.sleep(40);
+		if(vague_monstres.arrived(chemin))	vie--;
+    	else vague_monstres.move();
+		mRedrawHandler.sleep(2000);
     }
     
     public int getI(float x){
@@ -268,12 +271,12 @@ public class TileView extends View {
     	return (int) FloatMath.floor(y / mTileHeight);
     }
     
-    public float getX(int i){
-    	return (float) (i * mTileWidth);
+    public float getX(float position){
+    	return (float) (position * mTileWidth);
     }
     
-    public float getY(int j){
-    	return (float) (j * mTileHeight);
+    public float getY(float position){
+    	return (float) (position * mTileHeight);
     }
      
     // Evenement du clic souris pour ajout des tours
@@ -285,8 +288,8 @@ public class TileView extends View {
 			intransform.mapPoints(tabFloat);
 	    	int i = getI(tabFloat[0]);
 	    	int j = getJ(tabFloat[1]);
-			if(getTile(i, j) == VIDE)		ajout(i, j); // méthode ajout d'une tour
-			else if(getTile(i, j) == TOUR)	suppression(i, j); // méthode suppression d'une tour
+			if(getTile(i, j) == VIDE)		ajout(i, j); // methode ajout d'une tour
+			else if(getTile(i, j) == TOUR)	suppression(i, j); // methode suppression d'une tour
 		}
 		return true;
 	}
@@ -295,7 +298,6 @@ public class TileView extends View {
     @Override
     protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
     	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
-
         transform = new Matrix();
 		intransform = new Matrix();
 		RectF rectVoulu = new RectF(0, 0, mTileWidth * mXTileCount, mTileHeight * mYTileCount);
