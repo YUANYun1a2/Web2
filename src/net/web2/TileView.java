@@ -34,6 +34,7 @@ import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.view.View;
 
+
 /**
  * TileView: a View-variant designed for handling arrays of "icons" or other
  * drawables.
@@ -46,8 +47,15 @@ public class TileView extends View {
      * Width/Height are in pixels, and Drawables will be scaled to fit to these
      * dimensions. X/Y Tile Counts are the number of tiles that will be drawn.
      */
-	int w, h;
 
+    protected static int mTileSize = 40;
+    int w; int h;
+
+
+
+	private static final int TARGET_HEIGHT = 800;
+	private static final int TARGET_WIDTH = 600;
+	private Paint paint;
     protected static int mXTileCount;
     protected static int mYTileCount;
     
@@ -249,6 +257,7 @@ public class TileView extends View {
 
     @Override
     public void onDraw(Canvas canvas) {
+
         super.onDraw(canvas);
         canvas.concat(transform);
 		canvas.drawText(String.valueOf(vie), 0, 0, mPaint);
@@ -263,6 +272,7 @@ public class TileView extends View {
                 }
             }
         }
+
 		vague_monstres.draw(canvas);
     }
     
@@ -290,6 +300,7 @@ public class TileView extends View {
     	else vague_monstres.move();
 		cpt_monstre++;
 		mRedrawHandler.sleep(50);
+
     }
     
     public int getI(float x){
@@ -323,11 +334,16 @@ public class TileView extends View {
 		return true;
 	}
     
+
+    
     //Gestion taille ecran 
     @Override
     protected void onSizeChanged(int largeur, int hauteur, int ancien_largeur, int ancien_hauteur) {
     	super.onSizeChanged(largeur, hauteur, ancien_largeur, ancien_hauteur);
-        transform = new Matrix();
+
+        
+		transform = new Matrix();
+
 		intransform = new Matrix();
 		RectF rectVoulu = new RectF(0, 0, mTileWidth * mXTileCount, mTileHeight * mYTileCount);
 		RectF rectReel = new RectF(0, 0, largeur, hauteur);
