@@ -36,11 +36,8 @@ public class Wave {
 		Iterator<Monstre> it = liste_monstres.iterator();
 		while(it.hasNext()){
 			Monstre monstre = it.next();
-			System.out.println("monstre: " + monstre.position + " chemin: " + (float) chemin.getPositionFinale());
 			if(monstre.position >= (float) chemin.getPositionFinale()){
-				System.out.println("Here");
 				it.remove();
-				System.out.println("Here 2");
 				return true;
 			}
 		}
