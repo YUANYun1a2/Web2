@@ -20,7 +20,7 @@ public class Monstre {
 		this.position = position;
 		this.wave = wave;
 		this.chemin = chemin;
-		vx = (float) 0.1;
+		vx = (float) 1;
 		paint = new Paint();
 	}
 	
