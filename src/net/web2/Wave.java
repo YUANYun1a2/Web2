@@ -9,22 +9,21 @@ import android.graphics.Canvas;
 
 public class Wave {
 	Bitmap bitmap;
+	Chemin chemin;
 	ArrayList<Monstre> liste_monstres;
+	int nombre_monstres;
 
-	public Wave(Bitmap bitmap, Chemin chemin) {
+	public Wave(Bitmap bitmap, Chemin chemin, int nombre_monstres) {
 		this.bitmap = bitmap;
+		this.chemin = chemin;
+		this.nombre_monstres = nombre_monstres;
 		liste_monstres = new ArrayList<Monstre>();
-
-		liste_monstres.add(new Monstre(bitmap, 0, this,chemin));
-		liste_monstres.add(new Monstre(bitmap, 1, this,chemin));
-		liste_monstres.add(new Monstre(bitmap, 2, this,chemin));
 
 	}
 
 	public void draw(Canvas canvas) {
 		for(Monstre monstre: liste_monstres){
 			monstre.draw(canvas);
-			canvas.drawBitmap(monstre.bitmap, monstre.getX(), monstre.getY(), monstre.paint);
 		}
 	}
 
@@ -35,16 +34,17 @@ public class Wave {
 	}
 	
 	public boolean arrived(Chemin chemin){
-		Iterator<Monstre> it = this.liste_monstres.iterator();
+		Iterator<Monstre> it = liste_monstres.iterator();
 		while(it.hasNext()){
 			Monstre monstre = it.next();
-			if(monstre.position == chemin.getPositionFinale()){
+			if(monstre.position >= (float) chemin.getPositionFinale()){
 				it.remove();
 				return true;
 			}
 		}
 		return false;
 	}
+
 	public void supmobdie(){
 		Iterator<Monstre> it = this.liste_monstres.iterator();
 		while(it.hasNext()){
@@ -56,4 +56,15 @@ public class Wave {
 	}
 		
 	
+
+	
+	public void addMonstre(){
+		liste_monstres.add(new Monstre(bitmap, 0, this, chemin));
+	}
+	
+	public boolean destroyed(){
+		if(liste_monstres.isEmpty())	return true;
+		else	return false;
+	}
+
 }

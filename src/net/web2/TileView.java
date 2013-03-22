@@ -57,10 +57,13 @@ public class TileView extends View {
     
     public int vie;
 	public int argent;
+	public int cpt_monstre;
+	public int cpt_total; 
     
     public int mTileWidth;
     public int mTileHeight;
 
+    private WaveManager gestion_vague;
 	private Wave vague_monstres;
 
     private Matrix transform;
@@ -95,16 +98,23 @@ public class TileView extends View {
         loadTile(VIDE, r.getDrawable(R.drawable.herbe));
         loadTile(TOUR, r.getDrawable(R.drawable.tour));
         loadTile(ROUTE, r.getDrawable(R.drawable.chemin));
-        bmp_ennemi = loadImage(R.drawable.ennemi);
-      
+  
     }
     
 
     private final Paint mPaint = new Paint();
     
     void init(){
+    	cpt_monstre = 0;
+    	cpt_total = 6;
     	vie = 10; //Valeur temporaire pour le moment
 		argent = 500; //Valeur temporaire pour le moment
+        bmp_ennemi = loadImage(R.drawable.ennemi);
+        chemin = new Chemin(this);
+		gestion_vague = new WaveManager();
+		gestion_vague.setWave(bmp_ennemi, chemin, cpt_total);
+		vague_monstres = gestion_vague.getWave();
+		liste_Tours = new ArrayList<Tour>();
         initTileView();
         mTileGrid = new int[][]{
         		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
@@ -120,9 +130,6 @@ public class TileView extends View {
         		};
         mYTileCount = mTileGrid.length;
         mXTileCount = mTileGrid[0].length;
-        chemin = new Chemin(this);
-		vague_monstres = new Wave(bmp_ennemi, chemin);
-		
 		update();
     }
 
@@ -281,8 +288,18 @@ public class TileView extends View {
 	};
     
     public void update() {
+        if(!gestion_vague.complete() && cpt_monstre % 10 == 0){
+        	gestion_vague.addMonstre(vague_monstres);
+        	cpt_monstre /= 10;
+        }else{
+        	if(vague_monstres.destroyed()){
+        		cpt_total += 2;
+        		gestion_vague.setWave(bmp_ennemi, chemin, cpt_total);
+        	}
+        }
+        vague_monstres.move();
 		if(vague_monstres.arrived(chemin))	vie--;
-    	else vague_monstres.move();
+		cpt_monstre++;
 		mRedrawHandler.sleep(50);
     }
     
