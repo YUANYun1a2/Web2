@@ -294,8 +294,8 @@ public class TileView extends View {
         		gestion_vague.setWave(bmp_ennemi, chemin, cpt_total);
         	}
         }
+        vague_monstres.move();
 		if(vague_monstres.arrived(chemin))	vie--;
-    	else vague_monstres.move();
 		cpt_monstre++;
 		mRedrawHandler.sleep(50);
     }

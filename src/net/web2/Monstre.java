@@ -8,7 +8,6 @@ public class Monstre {
 	
 	Chemin chemin;
 	Bitmap bitmap;
-	float dDD; // distance Depuis D�but
 	float vx; // vitesse
 	float position;
 	TileView grille;
@@ -20,7 +19,7 @@ public class Monstre {
 		this.position = position;
 		this.wave = wave;
 		this.chemin = chemin;
-		vx = (float) 1;
+		vx = (float) 0.1;
 		paint = new Paint();
 	}
 	
