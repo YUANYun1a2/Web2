@@ -83,11 +83,16 @@ public class TileView extends View {
 
 	private ArrayList<Tour> liste_Tours;
 
-	/**
-	 * A hash that maps integer handles specified by the subclasser to the
-	 * drawable that will be used for that reference
-	 */
-	private Bitmap[] mTileArray; 
+	private Tour cible;
+	private Tour puissance;
+	private Monstre life;
+	
+    /**
+     * A hash that maps integer handles specified by the subclasser to the
+     * drawable that will be used for that reference
+     */
+    private Bitmap[] mTileArray; 
+
 
 	/**
 	 * A two-dimensional array of integers in which the number represents the
