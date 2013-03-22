@@ -45,5 +45,15 @@ public class Wave {
 		}
 		return false;
 	}
+	public void supmobdie(){
+		Iterator<Monstre> it = this.liste_monstres.iterator();
+		while(it.hasNext()){
+			Monstre monstre = it.next();
+			if(monstre.life <= 0){
+				it.remove();
+			}
+		}
+	}
+		
 	
 }

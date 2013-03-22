@@ -17,6 +17,9 @@
 package net.web2;
 
 import android.content.Context;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -66,6 +69,12 @@ public class TileView extends View {
 	private Bitmap bmp_ennemi;
 	private Chemin chemin;
 
+	
+	private ArrayList<Tour> liste_Tours;
+	private Tour cible;
+	private Tour puissance;
+	private Monstre life;
+	
     /**
      * A hash that maps integer handles specified by the subclasser to the
      * drawable that will be used for that reference
@@ -117,20 +126,34 @@ public class TileView extends View {
 		update();
     }
 
-    public void ajout(int x, int y){
-    	if (getTile(x, y) == VIDE && argent >= 100){
-    		setTile(TOUR, x, y);
+    public void ajout(int i, int j){
+    	if (getTile(i, j) == VIDE && argent >= 100){
+    		setTile(TOUR, i, j);
 			argent -= 100;
+			
+			// ajout de la tour créée dans la collection liste_Tours :
+			liste_Tours.add(new Tour(i, j, 1, 3, 5));
     	}
     }
     
-    public void suppression(int x, int y){
-    	if (getTile(x, y) == TOUR){
-    		setTile(VIDE, x, y);
+    public void suppression(int i, int j){
+    	if (getTile(i, j) == TOUR){
+    		setTile(VIDE, i, j);
 			argent += 50;
     		invalidate();
+    		
+    		// suppression de la tour dans la collection liste_Tours :
+    		Iterator<Tour> it = this.liste_Tours.iterator();
+    		while(it.hasNext()){
+    			Tour tour = it.next();
+    			if(tour.i == i && tour.j == j){
+    				it.remove();
+    			}
+    		}
     	}
     }
+    
+    
     
     public TileView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -260,7 +283,7 @@ public class TileView extends View {
     public void update() {
 		if(vague_monstres.arrived(chemin))	vie--;
     	else vague_monstres.move();
-		mRedrawHandler.sleep(2000);
+		mRedrawHandler.sleep(50);
     }
     
     public int getI(float x){
