@@ -66,6 +66,7 @@ public class TileView extends View {
 	public int vie;
 	public int argent;
 	public int cpt_monstre;
+	public int cpt_total; 
 
 	public int mTileWidth;
 	public int mTileHeight;
@@ -110,29 +111,30 @@ public class TileView extends View {
 
 	void init(){
 		cpt_monstre = 0;
-		vie = 10; //Valeur temporaire pour le moment
-		argent = 500; //Valeur temporaire pour le moment
+    	vie = 10; //Valeur temporaire pour le moment
+				argent = 500; //Valeur temporaire pour le moment
 		bmp_ennemi = loadImage(R.drawable.ennemi);
 		chemin = new Chemin(this);
-		gestion_vague = new WaveManager();
-		gestion_vague.setWave(bmp_ennemi, chemin, 6);
-		vague_monstres = gestion_vague.getWave();
-		initTileView();
-		mTileGrid = new int[][]{
-				{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,2,1,0,0,0,0,0,0,0,0,0,0,0},
-				{0,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
-				{0,1,0,0,0,0,1,1,1,1,0,0,0,0,0},
-				{0,1,0,0,0,0,1,0,0,1,2,0,0,0,0},
-				{0,1,2,0,0,2,1,0,0,1,1,1,1,0,0},
-				{0,1,1,1,1,1,1,0,0,0,0,2,1,0,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
-				{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1}
-		};
-		mYTileCount = mTileGrid.length;
-		mXTileCount = mTileGrid[0].length;
-		update();
+			gestion_vague = new WaveManager();
+			gestion_vague.setWave(bmp_ennemi, chemin, cpt_total);
+			vague_monstres = gestion_vague.getWave();
+			liste_Tours = new ArrayList<Tour>();
+        initTileView();
+        mTileGrid = new int[][]{
+        		{1,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,0,2,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,1,1,1,0,0,0,0,0,0,0,0,0,0,0},
+        		{0,1,0,0,0,0,1,1,1,1,0,0,0,0,0},
+        		{0,1,0,0,0,0,1,0,0,1,2,0,0,0,0},
+        		{0,1,2,0,0,2,1,0,0,1,1,1,1,0,0},
+        		{0,1,1,1,1,1,1,0,0,0,0,2,1,0,0},
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,2,0},
+        		{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1}
+        		};
+        mYTileCount = mTileGrid.length;
+        mXTileCount = mTileGrid[0].length;
+			update();
 	}
 
 	public void ajout(int i, int j){
@@ -290,17 +292,22 @@ public class TileView extends View {
 			sendMessageDelayed(obtainMessage(0), delayMillis);
 		}
 	};
-
-	public void update() {
-		if(!gestion_vague.complete() && cpt_monstre % 10 == 0){
-			gestion_vague.addMonstre(vague_monstres);
-			cpt_monstre /= 10;
-		}
+  
+    public void update() {
+        if(!gestion_vague.complete() && cpt_monstre % 10 == 0){
+        		gestion_vague.addMonstre(vague_monstres);
+        		cpt_monstre /= 10;
+        }else{
+        		if(vague_monstres.destroyed()){
+        			cpt_total += 2;
+        			gestion_vague.setWave(bmp_ennemi, chemin, cpt_total);
+        	}
+        }
+        vague_monstres.move();
 		if(vague_monstres.arrived(chemin))	vie--;
-		else vague_monstres.move();
-		cpt_monstre++;
-		mRedrawHandler.sleep(50);
-		ciblage();
+			cpt_monstre++;
+			mRedrawHandler.sleep(50);
+			ciblage();
 	}
 
 	public int getI(float x){
